@@ -32,6 +32,7 @@ async function run() {
     await client.connect();
 
     const campainDB = client.db("campainDB").collection("campain");
+    const donatedColl = client.db("campainDB").collection("donatedColl");
 
     app.get("/allcampain",async(req,res)=>{
         const cursor = campainDB.find({});
@@ -87,6 +88,12 @@ async function run() {
         const addCampaign =req.body;
         console.log(addCampaign)
         const result = await campainDB.insertOne(addCampaign);
+        res.send(result)
+    })
+    app.post("/donatedcampaign",async(req,res)=>{
+        const addCampaign =req.body;
+        console.log(addCampaign)
+        const result = await donatedColl.insertOne(addCampaign);
         res.send(result)
     })
 
