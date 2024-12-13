@@ -3,7 +3,7 @@ const cors=require('cors')
 require('dotenv').config()
 const app=express();
 const port=process.env.PORT||5000;
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 
 
@@ -32,6 +32,52 @@ async function run() {
     await client.connect();
 
     const campainDB = client.db("campainDB").collection("campain");
+
+    app.get("/allcampain",async(req,res)=>{
+        const cursor = campainDB.find({});
+        const allValues = await cursor.toArray();
+        res.send(allValues)
+    })
+
+    app.get("/campain/:id", async(req,res)=>{
+        const id=req.params.id
+        // console.log("please delete this user",id)
+        const query = { _id: new ObjectId(id) };
+        const user = await campainDB.findOne(query);
+        res.send(user)
+        
+    })
+    app.get("/mycampain", async(req,res)=>{
+        const cursor = campainDB.find({});
+        const allValues = await cursor.toArray();
+        res.send(allValues)  
+    })
+
+    app.delete("/campain/:id", async(req,res)=>{
+        const id=req.params.id
+        console.log("please delete this user",id)
+        const query = { _id: new ObjectId(id) };
+        const deleteResult = await campainDB.deleteOne(query);
+
+        res.send(deleteResult)
+        
+    })
+
+    // app.put("/campain/:id", async(req,res)=>{
+    //     const id=req.params.id
+    //     const user=req.body
+    //     const filter = { _id: new ObjectId(id) };
+    //     const options = { upsert: true };
+    //     const updateDoc = {
+    //         $set: {
+    //           name:user.name,
+    //           email:user.email
+    //         },
+    //       };
+    //     // console.log("please update this user",id,updateuser)
+    //     const result = await campainDB.updateOne(filter, updateDoc, options);
+    //     res.send(result)
+    // })
 
     app.post("/addnewcampaign",async(req,res)=>{
         const addCampaign =req.body;
