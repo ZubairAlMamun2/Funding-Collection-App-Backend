@@ -39,6 +39,11 @@ async function run() {
         const allValues = await cursor.toArray();
         res.send(allValues)
     })
+    app.get("/mydonation",async(req,res)=>{
+        const cursor = donatedColl.find({});
+        const allValues = await cursor.toArray();
+        res.send(allValues)
+    })
 
     app.get("/campain/:id", async(req,res)=>{
         const id=req.params.id
