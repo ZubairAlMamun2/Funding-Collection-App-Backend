@@ -63,21 +63,25 @@ async function run() {
         
     })
 
-    // app.put("/campain/:id", async(req,res)=>{
-    //     const id=req.params.id
-    //     const user=req.body
-    //     const filter = { _id: new ObjectId(id) };
-    //     const options = { upsert: true };
-    //     const updateDoc = {
-    //         $set: {
-    //           name:user.name,
-    //           email:user.email
-    //         },
-    //       };
-    //     // console.log("please update this user",id,updateuser)
-    //     const result = await campainDB.updateOne(filter, updateDoc, options);
-    //     res.send(result)
-    // })
+    app.put("/campain/:id", async(req,res)=>{
+        const id=req.params.id
+        const user=req.body
+        const filter = { _id: new ObjectId(id) };
+        const options = { upsert: true };
+        const updateDoc = {
+            $set: {
+              title:user.title,
+              photo:user.photo,
+              type:user.type,
+              amount:user.amount,
+              description:user.description,
+              date:user.date
+            },
+          };
+        // console.log("please update this user",id,updateuser)
+        const result = await campainDB.updateOne(filter, updateDoc, options);
+        res.send(result)
+    })
 
     app.post("/addnewcampaign",async(req,res)=>{
         const addCampaign =req.body;
