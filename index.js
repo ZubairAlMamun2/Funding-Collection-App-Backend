@@ -59,15 +59,7 @@ async function run() {
         res.send(allValues)  
     })
 
-    app.delete("/campain/:id", async(req,res)=>{
-        const id=req.params.id
-        console.log("please delete this user",id)
-        const query = { _id: new ObjectId(id) };
-        const deleteResult = await campainDB.deleteOne(query);
-
-        res.send(deleteResult)
-        
-    })
+    
 
     app.put("/campain/:id", async(req,res)=>{
         const id=req.params.id
