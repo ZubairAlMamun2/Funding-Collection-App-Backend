@@ -29,7 +29,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
     const campainDB = client.db("campainDB").collection("campain");
     const donatedColl = client.db("campainDB").collection("donatedColl");
@@ -61,7 +61,7 @@ async function run() {
 
     app.delete("/campain/:id", async(req,res)=>{
         const id=req.params.id
-        console.log("please delete this user",id)
+        // console.log("please delete this user",id)
         const query = { _id: new ObjectId(id) };
         const deleteResult = await campainDB.deleteOne(query);
 
@@ -91,21 +91,21 @@ async function run() {
 
     app.post("/addnewcampaign",async(req,res)=>{
         const addCampaign =req.body;
-        console.log(addCampaign)
+        // console.log(addCampaign)
         const result = await campainDB.insertOne(addCampaign);
         res.send(result)
     })
     app.post("/donatedcampaign",async(req,res)=>{
         const addCampaign =req.body;
-        console.log(addCampaign)
+        // console.log(addCampaign)
         const result = await donatedColl.insertOne(addCampaign);
         res.send(result)
     })
 
 
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    // await client.db("admin").command({ ping: 1 });
+    // console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
@@ -121,5 +121,5 @@ app.get("/",(req,res)=>{
 })
 
 app.listen(port,()=>{
-    console.log(`server is running at ${port} `)
+    // console.log(`server is running at ${port} `)
 })
